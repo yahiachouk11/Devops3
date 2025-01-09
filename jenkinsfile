@@ -9,7 +9,7 @@ pipeline{
     environment {
         // Initialize global variables here
         APP_NAME="monimage"
-        DOCKER_USER = "adamchouk23"
+        DOCKER_USER = "yahiachouk23"
         DOCKER_PASS="dockerhub"
         IMAGE_NAME="${DOCKER_USER}"+"/"+"${APP_NAME}"
         IMAGE_TAG = '1.0'   
@@ -31,7 +31,7 @@ pipeline{
         }
         stage("Checkout from SCM"){
             steps{
-                git branch: 'main', credentialsId:'github', url:'https://github.com/adama007/Devops'
+                git branch: 'main', credentialsId:'github', url:'https://github.com/yahiachouk11/Devops3'
             }
         }
         

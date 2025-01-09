@@ -61,7 +61,7 @@ spec:
     spec:
       containers:
         - name: todo-mi
-          image: adamchouk23/monimage:1.0
+          image: yahiachouk23/monimage:1.0
           ports:
             - containerPort: 3000
           envFrom:
