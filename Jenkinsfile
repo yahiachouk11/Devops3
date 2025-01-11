@@ -49,7 +49,6 @@ pipeline{
                     }
                     docker.withRegistry('',DOCKER_PASS){
                         docker_image.push("${IMAGE_TAG}")
-                        docker_image.push('latest')
                     }
                 }
             }
@@ -57,7 +56,7 @@ pipeline{
        
      stage('DeployToProduction') {
             steps {
-                kubeconfig(caCertificate: 'MIIDBjCCAe6gAwIBAgIBATANBgkqhkiG9w0BAQsFADAVMRMwEQYDVQQDEwptaW5pa3ViZUNBMB4XDTIzMTIyNDIyNTYxOVoXDTMzMTIyMjIyNTYxOVowFTETMBEGA1UEAxMKbWluaWt1YmVDQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKt++TNJFNGsI3oe1MsmYqHaPK5lAVeXb9ePhz6eIczX7v7DmdmYp8vkDXHq6VR6Yr0qlw35JEMiYY9nakxT/2PQzEjeJs03VMVbBKW0ephlqqCYJZmYCkSmvHZEP5J2KBsFCN8O2k1FEhbt7/RUUt8dDowR1SAXBoFpcizLEpUZO8twDXVu2Gn/BwUzqdWXPsv/Y8F2D+PcbgAG9eOUgZ1lUJEVt5DX5BWTWM2qurfx+SnBXQi7k63qXA2pvzJr+8eOwk8o+yhdQ9ykRlm3KisPgxC1kW2z7jVIy3GXxm7D+fdGtWuyLE9Ey32zRt9LOxC5va9luQJVl5YgfMNHhgUCAwEAAaNhMF8wDgYDVR0PAQH/BAQDAgKkMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDATAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBRdt0Xn7mbf6ObyoEDtjOfPNP9WhTANBgkqhkiG9w0BAQsFAAOCAQEAokwNv+4TwZAmWM6FVzxQO97wAvGXMYsY2/wnjEQ8jQ4JWEjut62TsoR5dlMRiu7kI7g+BG5+7qjTzczljmIKhrF7TLnrhLoaeMFw525cNlYNuhscEVwnJ18dbGZ7hF5aNYkhWUcaZrmPK8gQNs954XcDo0yptXhdNHUbZ7YhNP3WwZE77uwNeiSANW1GGwcpZNy6dbd2W3UQ3qvsNLOb5RMuf19rhEUKQGa9PugCbYoAKoTTrjeK8CZtvL3sZKf3RfzoYQ/LQ5qnhK2JetHNoGw0i6WAzwVKrKs6Jbpu17VdkFRqp9PFaAM3tj8DHsxQelTr7uYRW4x7GAl3mzOa5Q==', credentialsId: 'config', serverUrl: 'https://192.168.49.2:8443') {
+                kubeconfig(caCertificate: 'IIDBjCCAe6gAwIBAgIBATANBgkqhkiG9w0BAQsFADAVMRMwEQYDVQQDEwptaW5pa3ViZUNBMB4XDTI1MDEwOTE5MTkyNVoXDTM1MDEwODE5MTkyNVowFTETMBEGA1UEAxMKbWluaWt1YmVDQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAOzfCgCvBXagizjawIjFzld+yME31WEXw6bBFxPo1iwoe/OfgEvQ/q3fcwjdnJDOjO61JV3nnBbI/uYD2xuotKP+2h64zcsjjXXiYCZEXmf/iJtqTShD0aGgJ+3wbpIMJp0i3nAVJxHrszfzj/ahXlsQptggwA0ShFOL+b/c4opRiGlytjZYT39uxbTD3MEhsXiqc8dFssRe7BcnzDgTt2uBp20vn2t7iKqyx9rzPcnuWGjTC31iYFpZdEDxqcEOfDAWxjAZvdjjsVUnodwUYZ9FsTu16bq3/eDh0Kl/Q5b1jZENdajSmycCxDyfuQWrwxhT54OFl0946vpZgAbsAUcCAwEAAaNhMF8wDgYDVR0PAQH/BAQDAgKkMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDATAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBT8lMeLzKENoqKWsnpz5/ZWYp+evzANBgkqhkiG9w0BAQsFAAOCAQEAlyRx/wYVKRlPzbkSn07PJtcEh0WciezvqbQJLBaUjteSSvZzRT6qf9Yt8tW2QEbLH5vXY+CMJIY6GAWxHzmPaZKx9BEof7ITcciRSVkOQ9g1Qfuds7PJqbAMWBGRGUYAJ11j2cZasKHYaD9ktNp+vzm4mOTeBJuIhbnkSOdNlEiMEimC6eHDrKLmGCL2CzW+R2twRp5d5/xHZO2O7tDSQPzrFjnKpSh0ik0aqsPU2hIfQ56+bjts6zL3Xg50VMbbCFJb87zfSi8VwyPvAW+tx03tKqJzfg7eFkXfYZ0I1C0L6XC7uUZgPstkM2cDrWWm9wCmF8OqYFIni19EK0eOFQ==', credentialsId: 'config', serverUrl: 'https://192.168.49.2:8443') {
                  sh 'kubectl apply -f configmap-a.yaml'
                  sh 'kubectl apply -f deployment-a.yaml'
                  sh 'kubectl rollout restart deployment todo-mi'
