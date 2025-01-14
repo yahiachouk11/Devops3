@@ -25,7 +25,7 @@ spec:
             - containerPort: 27017
           volumeMounts:
             - name: mongo-mi
-              mountPath: /data/db
+              mountPath: /data/db 
       volumes:
         - name: mongo-mi
           emptyDir: {}
@@ -102,3 +102,17 @@ spec:
         target:
           type: Utilization
           averageUtilization: 50
+----
+
+
+cat << EOF | kubectl apply -n monitoring -f -
+apiVersion : v1
+kind : Secret
+metadata :
+  namespace : monitoring
+  name : grafana - auth
+type : Opaque
+data :
+  admin - user : $ ( echo -n " admin " | base64 - w0 )
+  admin - password : $ ( echo -n " admin " | base64 - w0 )
+EOF
